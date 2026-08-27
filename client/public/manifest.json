@@ -1,0 +1,16 @@
+{
+  "short_name": "DumbbellDaily",
+  "name": "DUMBBELL DAILY — Daily Home Dumbbell Workout Tracker",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0D1117",
+  "theme_color": "#00F0FF",
+  "display": "standalone",
+  "orientation": "portrait"
+}
