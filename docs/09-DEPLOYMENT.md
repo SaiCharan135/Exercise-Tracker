@@ -28,21 +28,25 @@ CLIENT_URL=http://localhost:5173
 5. Configure Environment Variables (`MONGO_URI`, `JWT_SECRET`, `CLIENT_URL`, `NODE_ENV`).
 
 ### 2.2 Frontend Deployment (Vercel)
-1. Import repository on Vercel pointing to `/client`.
-2. Framework Preset: `Vite`.
-3. Build Command: `npm run build`
-4. Output Directory: `dist`
-5. Configure Environment Variable: `VITE_API_BASE_URL=https://your-backend-url.onrender.com/api`.
-6. Include [`vercel.json`](file:///e:/Exercise%20Tracker/client/vercel.json) rewrite configuration to prevent Vercel 404 `NOT_FOUND` errors on SPA route refreshes.
+1. Import repository on Vercel.
+2. If deploying from Root: Set **Root Directory** to `client` OR use root [`vercel.json`](file:///e:/Exercise%20Tracker/vercel.json) with `outputDirectory: "client/dist"`.
+3. Framework Preset: `Vite`.
+4. Build Command: `npm run build`
+5. Output Directory: `client/dist` (or `dist` if Root Directory is `client`).
+6. Configure Environment Variable: `VITE_API_BASE_URL=https://your-backend-url.onrender.com/api`.
 
 ---
 
-## 3. Resolving Vercel `NOT_FOUND` (404 Error)
-Single Page Applications (React + Vite + React Router) build a single `index.html` file. When users reload routes like `/workout` or `/exercises`, Vercel searches for physical file paths. To resolve Vercel `NOT_FOUND`:
+## 3. Resolving Vercel "Build output contains no 'functions' or 'static' directory"
+This warning occurs when Vercel builds the project from the root folder, but Vite places the production bundle inside `client/dist`. 
 
-Add `vercel.json` to the client root:
+Root [`vercel.json`](file:///e:/Exercise%20Tracker/vercel.json) solves this by explicitly specifying the output location:
 ```json
 {
+  "version": 2,
+  "buildCommand": "npm run build --prefix client",
+  "outputDirectory": "client/dist",
+  "framework": "vite",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
